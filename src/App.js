@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
 import './App.css';
 import Header from './components/Header/Header';
@@ -13,11 +13,19 @@ import Review from './components/Review/Review';
 import Inventory from './components/Inventory/Inventory';
 import Notfound from './components/Notfound/Notfound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
+import Login from './components/Login/Login';
+import { AuthContextProvider, PrivateRoute } from './components/Login/useAuth';
+import Shipment from './components/Shipment/Shipment';
+
+export const UserContext = createContext();
 
 
-function App() {
+function App(props) {
+   
+
   return (
     <div>
+      <AuthContextProvider>
       <Header></Header>
       <Router>
         <Switch>
@@ -36,13 +44,19 @@ function App() {
           <Route path="/product/:productKey">
         <ProductDetail></ProductDetail>
           </Route>
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <PrivateRoute path ="/shipment">
+          <Shipment></Shipment>
+          </PrivateRoute>
           <Route path="*">  
           <Notfound></Notfound>
 
           </Route>
         </Switch>
       </Router>
-     
+      </AuthContextProvider>
      
     </div>
   );
